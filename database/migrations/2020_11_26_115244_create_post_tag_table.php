@@ -15,7 +15,22 @@ class CreatePostTagTable extends Migration
     {
         Schema::create('post_tag', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('post_id')->index();
+            $table->unsignedBigInteger('tag_id')->index();
+
+
             $table->timestamps();
+
+            $table->foreign('post_id')->references('id')->on('posts')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('tag_id')->references('id')->on('tags')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            ///relacion muchos a muchos
         });
     }
 
